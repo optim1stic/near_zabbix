@@ -1,5 +1,11 @@
 # Install Zabbix 5.0 (Ubuntu 18)
-wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb
-dpkg -i zabbix-release_5.0-1+bionic_all.deb
-sudo apt update
-sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-agent
+
+
+Current Exported NEAR Metrics:
+near_block_number - The number of most recent block of blockchain
+local_block_number - The number of most recent block of local node
+near_block_produced - The number of blocks produced in epoch
+near_block_expected - The number of block expected in epoch
+near_current_stake - The current stake of validator
+near_version_build - The version build of blockchain
+local_version_build - The version build of local node
