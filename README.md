@@ -1,4 +1,4 @@
-# Install Zabbix 5.0 (Ubuntu 18)
+# [Install Zabbix 5.0 (Ubuntu 18)](https://www.notion.so/Install-Zabbix-5-0-Ubuntu-18-6f63c1d985cb4d1ab7dc6edc3a91bafb)
 
 
 Current Exported NEAR Metrics:
