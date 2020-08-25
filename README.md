@@ -2,6 +2,7 @@
 
 
 Current Exported NEAR Metrics:
+
 near_block_number - The number of most recent block of blockchain
 
 local_block_number - The number of most recent block of local node
