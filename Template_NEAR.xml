@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-08-26T22:39:05Z</date>
+    <groups>
+        <group>
+            <name>Nodes</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template NEAR</template>
+            <name>Template NEAR</name>
+            <templates>
+                <template>
+                    <name>Template Module Linux block devices by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Linux CPU by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Linux filesystems by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Linux generic by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Linux memory by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Linux network interfaces by Zabbix agent</name>
+                </template>
+                <template>
+                    <name>Template Module Zabbix agent</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Nodes</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>NEAR</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>NEAR: Version: Chain</name>
+                    <key>near.betanetversion</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}=1</expression>
+                            <name>NEAR: chain version has changed</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>NEAR: Expected Blocks</name>
+                    <type>DEPENDENT</type>
+                    <key>near.blockexpected</key>
+                    <delay>0</delay>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <params>$.num_expected_blocks</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>near.valinfo</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>NEAR: Block Height</name>
+                    <key>near.blockheight</key>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>NEAR: Produced Blocks</name>
+                    <type>DEPENDENT</type>
+                    <key>near.blockproduced</key>
+                    <delay>0</delay>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <params>$.num_produced_blocks</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>near.valinfo</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(#5)}=0</expression>
+                            <name>NEAR blocks not produced</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>NEAR: Block Height Local</name>
+                    <key>near.localblockheight</key>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{delta(#5,0)}=0</expression>
+                            <name>NEAR node stucks</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>NEAR: Version: Local</name>
+                    <key>near.localversion</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>NEAR: Slashed Status</name>
+                    <type>DEPENDENT</type>
+                    <key>near.slashedstatus</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <params>$.is_slashed</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>near.valinfo</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>NEAR: Stake Size</name>
+                    <type>DEPENDENT</type>
+                    <key>near.stakesize</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <params>$.stake</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>near.valinfo</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>NEAR: Validator Info</name>
+                    <key>near.valinfo</key>
+                    <delay>60s</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NEAR</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+            <screens>
+                <screen>
+                    <name>NEAR Screen</name>
+                    <hsize>2</hsize>
+                    <vsize>4</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>CPU utilization</name>
+                                <host>Template NEAR</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Memory utilization</name>
+                                <host>Template NEAR</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>NEAR: Block Height</name>
+                                <host>Template NEAR</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>NEAR: Produced Blocks</name>
+                                <host>Template NEAR</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>NEAR: Stake Size</name>
+                                <host>Template NEAR</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>2</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>NEAR: Block Height</name>
+            <graph_items>
+                <graph_item>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template NEAR</host>
+                        <key>near.localblockheight</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template NEAR</host>
+                        <key>near.blockheight</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>NEAR: Produced Blocks</name>
+            <graph_items>
+                <graph_item>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template NEAR</host>
+                        <key>near.blockproduced</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template NEAR</host>
+                        <key>near.blockexpected</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>NEAR: Stake Size</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template NEAR</host>
+                        <key>near.stakesize</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
